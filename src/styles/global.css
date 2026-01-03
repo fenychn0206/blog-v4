@@ -64,6 +64,64 @@
     blockquote {
       @apply my-4 border-l-2 pl-4;
     }
+    /* GitHub-style alerts */
+    blockquote.markdown-alert {
+      @apply my-4 rounded-md border-l-4 p-4;
+    }
+    blockquote.markdown-alert-note {
+      @apply border-blue-500 bg-blue-50 dark:bg-blue-950/30;
+    }
+    blockquote.markdown-alert-note .markdown-alert-title {
+      @apply text-blue-700 dark:text-blue-400;
+    }
+    blockquote.markdown-alert-tip {
+      @apply border-green-500 bg-green-50 dark:bg-green-950/30;
+    }
+    blockquote.markdown-alert-tip .markdown-alert-title {
+      @apply text-green-700 dark:text-green-400;
+    }
+    blockquote.markdown-alert-important {
+      @apply border-purple-500 bg-purple-50 dark:bg-purple-950/30;
+    }
+    blockquote.markdown-alert-important .markdown-alert-title {
+      @apply text-purple-700 dark:text-purple-400;
+    }
+    blockquote.markdown-alert-warning {
+      @apply border-yellow-500 bg-yellow-50 dark:bg-yellow-950/30;
+    }
+    blockquote.markdown-alert-warning .markdown-alert-title {
+      @apply text-yellow-700 dark:text-yellow-400;
+    }
+    blockquote.markdown-alert-caution {
+      @apply border-red-500 bg-red-50 dark:bg-red-950/30;
+    }
+    blockquote.markdown-alert-caution .markdown-alert-title {
+      @apply text-red-700 dark:text-red-400;
+    }
+    .markdown-alert-title {
+      @apply mb-2 flex items-center gap-2 font-semibold;
+    }
+    .markdown-alert-title::before {
+      content: '';
+      @apply inline-block h-4 w-4;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .markdown-alert-note .markdown-alert-title::before {
+      content: '💡';
+    }
+    .markdown-alert-tip .markdown-alert-title::before {
+      content: '✨';
+    }
+    .markdown-alert-important .markdown-alert-title::before {
+      content: '❗';
+    }
+    .markdown-alert-warning .markdown-alert-title::before {
+      content: '⚠️';
+    }
+    .markdown-alert-caution .markdown-alert-title::before {
+      content: '🚫';
+    }
     a {
       @apply text-blue-500 underline;
     }
