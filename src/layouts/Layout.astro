@@ -29,6 +29,24 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Theme initialization - must run before any rendering to prevent flash -->
+    <script is:inline>
+      // 立即执行，防止首次加载闪烁
+      const getTheme = () => {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+          return localStorage.getItem("theme");
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      };
+
+      const theme = getTheme();
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+
     <!-- Fonts from loli.net (China-friendly CDN) -->
     <link rel="preconnect" href="https://fonts.loli.net" />
     <link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
@@ -72,25 +90,19 @@ const {
 </html>
 
 <script is:inline>
-  const setTheme = () => {
-    let theme;
-
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      theme = localStorage.getItem("theme");
-    } else {
-      theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    }
+  // 处理 View Transitions 的生命周期
+  function applyTheme() {
+    const theme = typeof localStorage !== "undefined" && localStorage.getItem("theme")
+      ? localStorage.getItem("theme")
+      : window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
-  };
+  }
 
-  setTheme();
-
-  document.addEventListener("astro:after-swap", setTheme);
+  // 在页面加载和 View Transitions 切换时都应用主题
+  document.addEventListener("astro:page-load", applyTheme);
 </script>
