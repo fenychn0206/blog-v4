@@ -18,6 +18,10 @@
 @layer components {
   :root {
     text-autospace: normal;
+    font-size: 17px;
+  }
+  body {
+    @apply leading-relaxed;
   }
   code,
   pre {
@@ -28,16 +32,22 @@
       @apply my-4 leading-relaxed;
     }
     h1 {
-      @apply my-4 text-xl font-medium dark:text-white;
+      @apply mb-4 mt-6 text-2xl font-semibold dark:text-white;
     }
     h2 {
-      @apply my-4 text-lg font-medium dark:text-white;
+      @apply mb-3 mt-6 border-b pb-2 text-xl font-semibold dark:border-zinc-700 dark:text-white;
     }
-    h3,
-    h4,
-    h5,
+    h3 {
+      @apply mb-3 mt-6 text-lg font-semibold dark:text-white;
+    }
+    h4 {
+      @apply mb-2 mt-4 text-base font-semibold dark:text-white;
+    }
+    h5 {
+      @apply mb-2 mt-4 text-sm font-semibold dark:text-white;
+    }
     h6 {
-      @apply my-4 font-medium dark:text-white;
+      @apply mb-2 mt-4 text-sm font-medium dark:text-white;
     }
     :not(pre) > code {
       @apply whitespace-nowrap rounded border bg-zinc-200/50 px-1 py-0.5 font-mono text-sm font-medium text-black dark:border-zinc-700 dark:bg-zinc-800/50 dark:text-white;
