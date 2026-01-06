@@ -1,5 +1,5 @@
 ---
-title: "【题解】字符串反转"
+title: "题解 | 字符串反转"
 description: "一道简单的字符串操作题的解题思路"
 date: 2024-07-02
 ---
@@ -30,8 +30,8 @@ date: 2024-07-02
 
 ## 4.完整代码
 
-```
-`#include <bits/stdc++.h>
+```cpp
+#include <bits/stdc++.h>
 using namespace std;
 
 int main()
@@ -51,7 +51,6 @@ int main()
 	cout << str ;
 	return 0;
 }
-`
 ```
 
 ## 写在最后
