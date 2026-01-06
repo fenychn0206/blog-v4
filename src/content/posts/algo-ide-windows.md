@@ -76,13 +76,12 @@ Sublime Text 是一款轻量级编辑器，拥有许多可以个性化的内容�
 
 如果你熟悉英文，那么恭喜你，你可以通过参照左边的默认配置来自定义。如果你不熟悉，没有关系，我可以给你一个示范。
 
-```
-`{
+```json
+{
     "spell_check": true,
     "indent_to_bracket": true,
     "draw_white_space": ["selection", "trailing", "isolated"],
 }
-`
 ```
 
 这个文件其实就只达到了一个目的：显示行尾空格、缩进。
@@ -106,8 +105,7 @@ Sublime Text 是一款轻量级编辑器，拥有许多可以个性化的内容�
 你也可以直接访问这个路径（理论上都在这个位置）：
 
 ```
-`C:\Users\[你的电脑用户名]\AppData\Roaming\Sublime Text\Packages
-`
+C:\Users\[你的电脑用户名]\AppData\Roaming\Sublime Text\Packages
 ```
 
 可能会出现一些文件夹，我们进入 `User` 文件夹。
@@ -116,8 +114,8 @@ Sublime Text 是一款轻量级编辑器，拥有许多可以个性化的内容�
 
 双击使用 Sublime Text 打开，粘贴这个文件：
 
-```
-`{
+```json
+{
     "encoding": "utf-8",
     "working_dir": "$file_path",
     "shell_cmd": "g++ -Wall \"${file}\" -o \"${file_path}/${file_base_name}\"",
@@ -132,7 +130,6 @@ Sublime Text 是一款轻量级编辑器，拥有许多可以个性化的内容�
         }
     ]
 }
-`
 ```
 
 保存退出，在正式编译之前我们还需要做一点事情。
@@ -170,8 +167,7 @@ Sublime Text 是一款轻量级编辑器，拥有许多可以个性化的内容�
 你也可以直接访问这个路径（理论上都在这个位置）：
 
 ```
-`C:\Users\[你的电脑用户名]\AppData\Roaming\Sublime Text\Packages
-`
+C:\Users\[你的电脑用户名]\AppData\Roaming\Sublime Text\Packages
 ```
 
 可能会出现一些文件夹，我们进入 `User` 文件夹。
@@ -180,8 +176,8 @@ Sublime Text 是一款轻量级编辑器，拥有许多可以个性化的内容�
 
 用 Sublime Text 打开，粘贴这个代码，然后修改其中的内容：
 
-```
-`<snippet>
+```html
+<snippet>
     <content>
 <![CDATA[
 [你的代码框架]
@@ -193,13 +189,12 @@ Sublime Text 是一款轻量级编辑器，拥有许多可以个性化的内容�
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.c, source.c++</scope>
 </snippet>
-`
 ```
 
 如果你不理解，你可以参考这个例子：
 
-```
-`<snippet>
+```html
+<snippet>
     <content>
 <![CDATA[
 #include <bits/stdc++.h>
@@ -223,7 +218,6 @@ int main() {
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.c, source.c++</scope>
 </snippet>
-`
 ```
 
 这样，每当你新建一个 `.cpp` 的文件时，输入`上面代码的[关键词]` 然后在弹出的菜单中选择你的预设，就可以为你补全框架了！
