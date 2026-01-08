@@ -156,5 +156,27 @@
     mark {
       @apply dark:bg-yellow-500/50 dark:text-white;
     }
+    /* Footnotes */
+    .footnotes {
+      @apply mt-8 border-t pt-4 text-sm dark:border-zinc-700;
+    }
+    .footnotes ol {
+      @apply my-4;
+    }
+    .footnotes li {
+      @apply mb-2;
+    }
+    .footnotes p {
+      @apply my-0 inline;
+    }
+    .footnotes a {
+      @apply no-underline;
+    }
+    sup {
+      @apply align-super text-xs;
+    }
+    sup a {
+      @apply no-underline;
+    }
   }
 }
