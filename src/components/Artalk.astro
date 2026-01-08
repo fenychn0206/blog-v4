@@ -7,13 +7,10 @@ interface Props {
 const { pageKey, pageTitle } = Astro.props;
 ---
 
-<hr />
-<br />
-
-<div class="text-sm text-zinc-500">
-  <h6 class="">来过，就留下你的足迹吧！</h6>
+<div class="artalk-container">
+  <p class="artalk-hint">来过，就留下你的足迹吧！</p>
+  <div id="artalk-comments"></div>
 </div>
-<div id="artalk-comments"></div>
 
 <script>
   import Artalk from "artalk";
@@ -22,6 +19,16 @@ const { pageKey, pageTitle } = Astro.props;
   function initArtalk() {
     const container = document.getElementById("artalk-comments");
     if (!container) return;
+
+    // 检查当前页面路径是否与已初始化的实例路径相同
+    const currentPath = window.location.pathname;
+    if (
+      (window as any).artalkInstance &&
+      (window as any).artalkLastPath === currentPath
+    ) {
+      // 如果是同一页面，不需要重新初始化
+      return;
+    }
 
     // 清理已有实例
     if ((window as any).artalkInstance) {
@@ -34,7 +41,7 @@ const { pageKey, pageTitle } = Astro.props;
     // 创建 Artalk 实例
     (window as any).artalkInstance = Artalk.init({
       el: "#artalk-comments",
-      pageKey: window.location.pathname,
+      pageKey: currentPath,
       pageTitle: document.title,
       server: "https://artalk.ooowl.net", // 请替换为你的 Artalk 服务器地址
       site: "Frederick的博客", // 请替换为你的站点名称
@@ -49,6 +56,9 @@ const { pageKey, pageTitle } = Astro.props;
       imgUpload: false,
       editorTravel: true,
     });
+
+    // 记录当前页面路径
+    (window as any).artalkLastPath = currentPath;
   }
 
   // 初始化评论系统
@@ -67,14 +77,24 @@ const { pageKey, pageTitle } = Astro.props;
     attributeFilter: ["class"],
   });
 
-  // 支持 Astro 页面切换
+  // 支持 Astro 页面切换 - 只监听 after-swap 事件
   document.addEventListener("astro:after-swap", initArtalk);
-  document.addEventListener("astro:page-load", initArtalk);
 </script>
 
 <style is:global>
-  #artalk-comments {
+  .artalk-container {
     margin-top: 2rem;
+  }
+
+  .artalk-hint {
+    font-size: 0.875rem;
+    color: #71717a;
+    margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  .dark .artalk-hint {
+    color: #a1a1aa;
   }
 
   /* 适配暗色模式 */
