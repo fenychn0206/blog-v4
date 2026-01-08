@@ -1,5 +1,5 @@
 ---
-title: "【题解】素数环"
+title: "题解 | 素数环"
 description: "使用深度优先搜索解决素数环问题的题解"
 date: 2024-06-27
 ---
@@ -24,8 +24,8 @@ date: 2024-06-27
 
 判断当前取出的数字是否和前一个组成素数，这一步可以用一个 `check`函数来解决（num的值为两个数字的和）
 
-```
-`bool check(int num)
+```cpp
+bool check(int num)
 {
     if (num < 2)
     {
@@ -40,13 +40,12 @@ date: 2024-06-27
     }
     return true;
 }
-`
 ```
 
-在创建一个 `back` 函数用于回溯：
+再创建一个 `back` 函数用于回溯：
 
-```
-`void back(int cur)  // cur 表示当前位置
+```cpp
+void back(int cur)  // cur 表示当前位置
 {
     if (cur == n)  // 检查最后一个数字和第一个数字之和是否为素数
     {
@@ -71,7 +70,6 @@ date: 2024-06-27
         }
     }
 }
-`
 ```
 
 在back函数中，首先判断是否已经放置了 $n$ 个数字。如果是，则检查最后一个数字和第一个数字之和是否为素数。如果是素数，则输出这个环。
@@ -90,8 +88,8 @@ date: 2024-06-27
 
 ## 4.完整代码
 
-```
-`#include <bits/stdc++.h>
+```cpp
+#include <bits/stdc++.h>
 using namespace std;
 
 const int MAXN = 16;
@@ -153,7 +151,6 @@ int main()
     back(1);
     return 0;
 }
-`
 ```
 
 ## 洛谷UVA题库版
