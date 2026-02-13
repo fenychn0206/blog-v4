@@ -11,7 +11,6 @@ interface Props {
   className?: string;
 }
 
-
 const {
   title,
   description,
@@ -55,7 +54,10 @@ const {
     <!-- Self-hosted fonts via @fontsource (imported in src/styles/global.css). Avoids Google Fonts and local system font reliance. -->
     <meta name="description" content={description} />
     <link rel="canonical" href="https://www.ooowl.net" />
-
+    <script
+      defer
+      src="https://umami.ohdragonboi.cn/analytics"
+      data-website-id="20db53a2-22e0-4ed1-b379-8d1136fb40c8"></script>
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
