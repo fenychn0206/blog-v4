@@ -1,5 +1,10 @@
-@import "lxgw-wenkai-screen-webfont/style.css";
-
+/* Self-host fonts via @fontsource to avoid Google Fonts & local system fonts */
+@import "@fontsource/noto-sans-sc/latin-400.css";
+@import "@fontsource/noto-sans-sc/latin-700.css";
+@import "@fontsource/noto-serif-sc/chinese-simplified-400.css";
+@import "@fontsource/noto-serif-sc/chinese-simplified-700.css";
+@import "@fontsource/noto-sans-mono/latin-400.css";
+@import "@fontsource/noto-sans-mono/latin-700.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

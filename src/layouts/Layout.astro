@@ -11,7 +11,6 @@ interface Props {
   className?: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
   title,
@@ -52,21 +51,10 @@ const {
       }
     </script>
 
-    <!-- Fonts from loli.net (China-friendly CDN) -->
-    <link rel="preconnect" href="https://fonts.loli.net" />
-    <link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
-    <link
-      href="https://fonts.loli.net/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href={canonicalURL} />
-
-    <!-- Primary Meta Tags -->
-    <title>{title}</title>
     <meta name="title" content={title} />
+    <!-- Self-hosted fonts via @fontsource (imported in src/styles/global.css). Avoids Google Fonts and local system font reliance. -->
     <meta name="description" content={description} />
+    <link rel="canonical" href="https://www.ooowl.net" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
