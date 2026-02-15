@@ -33,13 +33,22 @@
   function attachThemeToggle() {
     const button = document.getElementById("theme-toggle");
     if (!button) return;
+    if (button instanceof HTMLElement && button.dataset.bound === "1") return;
 
     button.addEventListener("click", () => {
       const isDark = document.documentElement.classList.toggle("dark");
       localStorage.setItem("theme", isDark ? "dark" : "light");
     });
+    if (button instanceof HTMLElement) button.dataset.bound = "1";
   }
 
   // 初始化和页面切换时都重新绑定
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachThemeToggle, {
+      once: true,
+    });
+  } else {
+    attachThemeToggle();
+  }
   document.addEventListener("astro:page-load", attachThemeToggle);
 </script>
