@@ -1,6 +1,6 @@
 ---
 title: "观纪录片《苏轼》（上）"
-description: "其实是，寒假作业？"
+description: "其实是，国庆作业？"
 date: 2025-10-02
 ---
 
