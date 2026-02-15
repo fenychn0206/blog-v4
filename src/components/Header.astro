@@ -9,13 +9,25 @@ import ThemeToggle from "./ThemeToggle.astro";
     <a href="/posts/1">时间线</a>
     <a href="/friends">朋友们</a>
     <a href={`mailto:${EMAIL}`}>电子邮</a>
-    <a href="https://www.travellings.cn/go.html" title="开往 · 友链接力">🚇</a>
   </nav>
-  <ThemeToggle />
+  <div class="flex items-center gap-2">
+    <a
+      href="https://www.travellings.cn/go.html"
+      title="开往 · 友链接力"
+      target="_blank"
+      aria-label="开往 · 友链接力"
+      class="inline-flex items-center text-zinc-500 no-underline hover:text-zinc-900 dark:hover:text-zinc-100"
+    >
+      <span class="material-symbols-rounded leading-none" style="font-size:20px"
+        >directions_subway</span
+      >
+    </a>
+    <ThemeToggle />
+  </div>
 </header>
 
 <style>
   a {
-    @apply font-medium text-zinc-500 hover:text-zinc-900 hover:underline dark:hover:text-zinc-100;
+    @apply font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100;
   }
 </style>
