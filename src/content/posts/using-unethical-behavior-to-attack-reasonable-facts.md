@@ -62,7 +62,7 @@ date: 2026-02-14
 
 <img src="https://blog-assets.ooowl.net/images/20260214/20260214115949664.png" alt="image-20260214上午115949574" style="zoom: 33%;" />
 
-查看内容后，我已啼笑皆非，具体内容如下：
+查看内容后，我已经笑得不行，具体内容如下：
 
 <img src="https://blog-assets.ooowl.net/images/20260214/20260214115654560.png" alt="文章" style="zoom: 50%;" />
 
@@ -130,11 +130,11 @@ date: 2026-02-14
 
 ![政府资料](https://blog-assets.ooowl.net/images/20260214/20260214175856945.png)
 
-▲ 上述资料中仅提及禁止商用相关规定
+▲ 这里唯一搜索到的「商业」仅仅是页脚的禁止商用，请勿与正文混淆！
 
 对此，我已无话可说。
 
-自相矛盾，您说的话真的是自己说的吗？
+## 自相矛盾，您说的话真的是自己说的吗？
 
 <img src="https://blog-assets.ooowl.net/images/20260214/20260214181237578.png" alt="这话是人" style="zoom: 33%;" />
 
@@ -151,4 +151,3 @@ date: 2026-02-14
 <img src="https://blog-assets.ooowl.net/images/20260214/20260214181903960.png" alt="头像和个签" style="zoom:50%;" />
 
 您难道真的认为，大家都和您一样缺乏基本认知吗？
-
