@@ -19,18 +19,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # 这里会自动寻找 package-lock.json，如果报错请确保仓库根目录有此文件
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          # 这里暂时去掉了强制缓存校验，避免因为没找到 lock 文件而报错
+          # 如果以后有了稳定的 package-lock.json，可以再加回 cache 选项
 
       - name: 安装依赖
-        run: npm install
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: 执行 Astro 构建
         run: npm run build
 
       # ----------------------------------------------------------------
-      # 将构建好的 dist 目录（Astro 默认输出）推送到当前仓库的 deploy 分支
+      # 将构建好的 dist 目录推送到当前仓库的 deploy 分支
+      # 这样做是为了让服务器只拉取静态网页，不拉取源码，速度极快
       # ----------------------------------------------------------------
       - name: 部署静态产物到 deploy 分支
         run: |
@@ -55,16 +60,28 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           script: |
-            # 进入你指定的 1Panel 网站目录
-            cd /opt/1panel/www/sites/www.ooowl.net/index
+            # 这里的路径已经修改为你的站点路径
+            SITE_DIR="/opt/1panel/www/sites/www.ooowl.net/index"
+            
+            # 确保目录存在
+            mkdir -p $SITE_DIR
+            cd $SITE_DIR
+            
+            # 初始化 Git（如果目录还不是 git 仓库）
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://github.com/${{ github.repository }}.git
+            fi
             
             # 解决 Git 目录所有权安全提示
-            git config --global --add safe.directory /opt/1panel/www/sites/www.ooowl.net/index
+            git config --global --add safe.directory $SITE_DIR
             
             # 强制同步 deploy 分支的内容
-            # 如果是第一次，请参考下方说明进行服务器初始化
             git fetch --all --depth=1
             git reset --hard origin/deploy
-            git pull --depth=1
             
-            echo "✅ 站点 www.ooowl.net 已完成同步更新"
+            # 修正权限，确保 1Panel 的 Web 服务可以访问
+            # 1Panel 默认 www 用户 ID 通常是 1000
+            chown -R 1000:1000 $SITE_DIR
+            
+            echo "✅ 站点 www.ooowl.net 同步成功"
