@@ -12,6 +12,9 @@ import remarkGithubBlockquoteAlert from "remark-github-blockquote-alert";
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
+  // Ensure all routes use trailing slashes and redirect to the slash version
+  // e.g. "/posts/slug" -> "/posts/slug/"
+  trailingSlash: "always",
   integrations: [mdx(), sitemap(), tailwind()],
   markdown: {
     remarkPlugins: [

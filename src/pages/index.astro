@@ -28,7 +28,7 @@ const latestPosts = sortedPosts.slice(0, 2);
           latestPosts.map((post) => (
             <li>
               <a
-                href={`/posts/${post.slug}`}
+                href={`/posts/${post.slug}/`}
                 class="group flex justify-between gap-3"
               >
                 <span class="group-hover:underline">{post.data.title}</span>
@@ -42,7 +42,7 @@ const latestPosts = sortedPosts.slice(0, 2);
       </div>
       <li>
         <a
-          href="/posts/1"
+          href="/posts/1/"
           class="text-zinc-500 hover:underline dark:text-zinc-500"
         >
           文章列表 &rarr;
