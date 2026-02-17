@@ -1,6 +1,6 @@
 ---
-import friendsData from "../data/friends.json";
-import Layout from "../layouts/Layout.astro";
+import friendsData from "../../data/friends.json";
+import Layout from "../../layouts/Layout.astro";
 
 const pageTitle = "友情链接 | Frederick's Blog";
 const pageDescription = "我的朋友们";
@@ -36,6 +36,14 @@ const pageDescription = "我的朋友们";
           </a>
         ))
       }
+    </div>
+    <div class="mt-6 flex justify-center">
+      <a
+        href="/friends/exchange/"
+        class="text-zinc-500 hover:underline dark:text-zinc-500"
+      >
+        交换友链 &rarr;
+      </a>
     </div>
   </main>
 </Layout>
