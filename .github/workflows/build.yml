@@ -3,7 +3,11 @@ name: Astro 1Panel 自动部署
 on:
   push:
     branches:
-      - main  # 监听 main 分支推送
+      - main
+
+# ✅ 核心修复：添加权限配置
+permissions:
+  contents: write
 
 env:
   TZ: Asia/Shanghai
@@ -19,8 +23,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # 这里暂时去掉了强制缓存校验，避免因为没找到 lock 文件而报错
-          # 如果以后有了稳定的 package-lock.json，可以再加回 cache 选项
 
       - name: 安装依赖
         run: |
@@ -33,24 +35,17 @@ jobs:
       - name: 执行 Astro 构建
         run: npm run build
 
-      # ----------------------------------------------------------------
-      # 将构建好的 dist 目录推送到当前仓库的 deploy 分支
-      # 这样做是为了让服务器只拉取静态网页，不拉取源码，速度极快
-      # ----------------------------------------------------------------
       - name: 部署静态产物到 deploy 分支
         run: |
           cd dist
           git init
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m "Deploy: ${{ github.event.head_commit.message }} [$(date +'%Y-%m-%d %H:%M:%S')]"
-          # 强制推送到仓库的 deploy 分支
+          # 使用内置 token 进行认证推送
           git push --force --quiet "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:deploy
 
-      # ----------------------------------------------------------------
-      # 远程 SSH 指令：通知 1Panel 服务器拉取最新代码
-      # ----------------------------------------------------------------
       - name: 服务器执行更新指令
         uses: appleboy/ssh-action@v1
         with:
@@ -60,28 +55,18 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           script: |
-            # 这里的路径已经修改为你的站点路径
             SITE_DIR="/opt/1panel/www/sites/www.ooowl.net/index"
-            
-            # 确保目录存在
             mkdir -p $SITE_DIR
             cd $SITE_DIR
             
-            # 初始化 Git（如果目录还不是 git 仓库）
             if [ ! -d ".git" ]; then
               git init
               git remote add origin https://github.com/${{ github.repository }}.git
             fi
             
-            # 解决 Git 目录所有权安全提示
             git config --global --add safe.directory $SITE_DIR
-            
-            # 强制同步 deploy 分支的内容
             git fetch --all --depth=1
             git reset --hard origin/deploy
-            
-            # 修正权限，确保 1Panel 的 Web 服务可以访问
-            # 1Panel 默认 www 用户 ID 通常是 1000
             chown -R 1000:1000 $SITE_DIR
             
             echo "✅ 站点 www.ooowl.net 同步成功"
