@@ -1,29 +1,52 @@
-name: Deploy Astro to Server (1Panel Site)
+name: Astro 1Panel 自动部署
 
 on:
   push:
     branches:
-      - main
+      - main  # 监听 main 分支推送
+
+env:
+  TZ: Asia/Shanghai
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: 检查代码
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          # 这里会自动寻找 package-lock.json，如果报错请确保仓库根目录有此文件
           cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
 
-      - name: Install dependencies
+      - name: 安装依赖
         run: npm install
 
-      - name: Build project
+      - name: 执行 Astro 构建
         run: npm run build
-      - name: Remote SSH Update
+
+      # ----------------------------------------------------------------
+      # 将构建好的 dist 目录（Astro 默认输出）推送到当前仓库的 deploy 分支
+      # ----------------------------------------------------------------
+      - name: 部署静态产物到 deploy 分支
+        run: |
+          cd dist
+          git init
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add .
+          git commit -m "Deploy: ${{ github.event.head_commit.message }} [$(date +'%Y-%m-%d %H:%M:%S')]"
+          # 强制推送到仓库的 deploy 分支
+          git push --force --quiet "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:deploy
+
+      # ----------------------------------------------------------------
+      # 远程 SSH 指令：通知 1Panel 服务器拉取最新代码
+      # ----------------------------------------------------------------
+      - name: 服务器执行更新指令
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -32,12 +55,16 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           port: ${{ secrets.PORT }}
           script: |
-            # 进入 1Panel 的网站目录
+            # 进入你指定的 1Panel 网站目录
             cd /opt/1panel/www/sites/www.ooowl.net/index
             
-            # 如果是第一次部署，需要先 git clone，后续执行以下更新脚本：
-            git config --global --add safe.directory "$(pwd)"
+            # 解决 Git 目录所有权安全提示
+            git config --global --add safe.directory /opt/1panel/www/sites/www.ooowl.net/index
+            
+            # 强制同步 deploy 分支的内容
+            # 如果是第一次，请参考下方说明进行服务器初始化
             git fetch --all --depth=1
-            git reset --hard origin/gh-pages  # 假设你的静态产物在 gh-pages 分支
+            git reset --hard origin/deploy
             git pull --depth=1
-            echo "成功上传"
+            
+            echo "✅ 站点 www.ooowl.net 已完成同步更新"
