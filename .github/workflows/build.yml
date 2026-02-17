@@ -30,7 +30,6 @@ jobs:
           else
             npm install
           fi
-
       - name: 执行 Astro 构建
         run: npm run build
 
@@ -42,8 +41,8 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m "Deploy: ${{ github.event.head_commit.message }} [$(date +'%Y-%m-%d %H:%M:%S')]"
+          # 强制推送到仓库的 deploy 分支
           git push --force --quiet "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:deploy
-
       - name: 服务器执行更新指令
         uses: appleboy/ssh-action@v1
         with:
@@ -54,26 +53,32 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             SITE_DIR="/opt/1panel/www/sites/www.ooowl.net/index"
-            REPO_SSH="git@github.com:${{ github.repository }}.git"
-            
+            # 1. 确保目录存在并进入
+            mkdir -p $SITE_DIR
             cd $SITE_DIR
+            
+            # 2. 强制标记目录安全（防止 Git 因所有权不同报错）
             git config --global --add safe.directory $SITE_DIR
             
-            # 确保远程地址是最新的 SSH 地址
+            # 3. 如果没有 Git 环境，则初始化并关联仓库
             if [ ! -d ".git" ]; then
               git init
-              git remote add origin $REPO_SSH
+              git remote add origin https://github.com/${{ github.repository }}.git
             else
-              git remote set-url origin $REPO_SSH
+              # 确保远程地址更新（防止项目改名或迁移）
+              git remote set-url origin https://github.com/${{ github.repository }}.git
             fi
             
-            # 强制同步
+            # 4. 关键修复：抓取 deploy 分支并强制检出文件
+            # 这一步会从 .git 文件夹里把文件“解压”到 index 根目录
             git fetch origin deploy --depth=1
             git reset --hard origin/deploy
             git checkout -f deploy
+            
+            # 5. 清理不在 deploy 分支中的多余文件
             git clean -fd
             
-            # 修正权限
+            # 6. 修正权限（根据你的截图，用户组 ID 是 1000）
             chown -R 1000:1000 $SITE_DIR
             
             echo "✅ 站点文件已成功布署至 $SITE_DIR"
