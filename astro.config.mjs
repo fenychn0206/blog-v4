@@ -5,6 +5,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 
 import tailwind from "@astrojs/tailwind";
+import icon from "astro-icon";
 import { SITE_URL } from "./src/consts";
 import remarkGfm from "remark-gfm";
 import remarkGithubBlockquoteAlert from "remark-github-blockquote-alert";
@@ -15,7 +16,7 @@ export default defineConfig({
   // Ensure all routes use trailing slashes and redirect to the slash version
   // e.g. "/posts/slug" -> "/posts/slug/"
   trailingSlash: "always",
-  integrations: [mdx(), sitemap(), tailwind()],
+  integrations: [mdx(), sitemap(), tailwind(), icon()],
   markdown: {
     remarkPlugins: [
       remarkGfm,

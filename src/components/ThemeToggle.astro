@@ -1,14 +1,28 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
 <button
   id="theme-toggle"
-  class="inline-flex items-center p-0 bg-transparent border-0 transition-colors text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+  class="inline-flex items-center border-0 bg-transparent p-0 text-zinc-500 transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
   aria-label="Toggle theme"
   transition:persist
 >
   <span class="sr-only">Toggle theme</span>
-    <!-- Material Symbols icons -->
-  <span id="sun" class="material-symbols-rounded leading-none hidden dark:block" style="font-size:20px">light_mode</span>
-  <span id="moon" class="material-symbols-rounded leading-none dark:hidden" style="font-size:20px">dark_mode</span>
-
+  <Icon
+    id="sun"
+    name="material-symbols:light-mode-outline"
+    width="20"
+    height="20"
+    class="hidden leading-none dark:block"
+  />
+  <Icon
+    id="moon"
+    name="material-symbols:dark-mode-outline"
+    width="20"
+    height="20"
+    class="leading-none dark:hidden"
+  />
 </button>
 
 <script>
