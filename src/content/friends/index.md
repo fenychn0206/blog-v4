@@ -3,8 +3,6 @@ title: 交换友链
 description: 交换友链说明与要求
 ---
 
-[&larr; 返回友链页面](/friends/)
-
 - 名称：`Frederick's Blog`
 - 链接：`https://www.ooowl.net`
 - （可选）头像/图标 二选一
