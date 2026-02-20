@@ -7,7 +7,7 @@ description: 交换友链说明与要求
 - 链接：`https://www.ooowl.net`
 - （可选）头像/图标 二选一
     - 头像（长方形）：`http://www.ooowl.net/avatar.jpeg`
-    - 图标（圆形）：`http://localhost:4321/favicon.png`
+    - 图标（圆形）：`http://www.ooowl.net/favicon.png`
 - （可选）Slogan：`Sky is the limit.`
 
 ### 友链基本要求
